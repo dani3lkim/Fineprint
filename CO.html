@@ -296,6 +296,24 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 .gterm-def{font-size:0.8rem;line-height:1.72;color:var(--ink2)}
 @media(max-width:700px){.glossary-grid{grid-template-columns:1fr}.glossary-inner{padding-left:1.2rem;padding-right:1.2rem}}
 
+/* WORD RESULT */
+.word-result-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:2rem;box-shadow:var(--shadow);margin-bottom:1.5rem}
+.word-result-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;gap:1rem}
+.word-result-word{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.03em;color:var(--ink);line-height:1.1}
+.word-result-pos{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-top:0.3rem}
+.word-result-pron{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink3);background:var(--bg2);padding:0.35rem 0.7rem;border-radius:8px;white-space:nowrap;margin-top:0.2rem}
+.word-result-def{font-size:1rem;line-height:1.75;color:var(--ink);margin-bottom:1rem;font-weight:400}
+.word-result-simple{font-size:0.88rem;line-height:1.7;color:var(--ink2);background:var(--bg);border-left:3px solid var(--accent);padding:0.75rem 1rem;border-radius:0 8px 8px 0;margin-bottom:1rem;font-style:italic}
+.word-result-example{font-size:0.85rem;color:var(--ink3);margin-bottom:1.25rem}
+.word-result-section{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--border)}
+.word-result-section-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.5rem}
+.word-result-section-body{font-size:0.87rem;line-height:1.7;color:var(--ink2)}
+.word-result-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}
+.word-chip{display:inline-block;padding:0.35rem 0.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:100px;font-size:0.75rem;color:var(--ink2);cursor:pointer;transition:all 0.15s}
+.word-chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.word-search-input{width:100%;background:transparent;border:none;font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--ink);outline:none;padding:0.25rem 0}
+.word-search-input::placeholder{color:var(--ink3);font-family:'DM Sans',sans-serif;font-weight:300;font-size:1rem}
+
 /* AUTH */
 .auth-btn{font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;color:#fff;background:var(--ink);border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;white-space:nowrap}
 .auth-btn:hover{background:#2d2a26}
@@ -405,7 +423,7 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
         <div class="lang-option" onclick="setLang('Russian','Русский',this)">🇷🇺 Русский</div>
       </div>
     </div>
-    <span class="header-tag" data-i18n="headerTag">Beta — 30 Tools</span>
+    <span class="header-tag">Beta</span>
     <button class="auth-btn" id="signInBtn" onclick="openAuthModal()">Sign In</button>
     <div class="user-menu" id="userMenu" style="display:none">
       <div class="user-avatar" id="userAvatar" onclick="toggleUserDropdown(event)">?</div>
@@ -451,26 +469,26 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow" data-i18n="heroEyebrow">AI-Powered Document Analysis</p>
-  <h1 data-i18n-html="heroH1">Stop signing things you <em>don't understand.</em></h1>
-  <p class="hero-sub" data-i18n="heroSub">Most people sign documents they don't fully understand — and the people drafting them are counting on that. Whether it's a lease, a job offer, a medical bill, or an app you just downloaded — the fine print is where your rights get quietly signed away. Fineprint AI analyzes any document in seconds, surfaces the clauses that actually matter, and gives you a clear breakdown so you can sign with confidence — or push back before it's too late.</p>
+  <p class="hero-eyebrow">AI-Powered Dictionary</p>
+  <h1>Look up any word, <em>in any language.</em></h1>
+  <p class="hero-sub">Search any word or phrase and instantly get a clear definition, simple explanation, example sentence, word origin, and what it means when you see it in contracts, leases, or legal documents.</p>
   <div class="hero-popular">
-    <p class="hero-popular-label">Most used</p>
+    <p class="hero-popular-label">Common words to look up</p>
     <div class="hero-popular-chips">
-      <button class="hero-chip" onclick="openToolSection(6)"><i data-lucide="key"></i>Rental Lease</button>
-      <button class="hero-chip" onclick="openToolSection(0)"><i data-lucide="file-text"></i>Terms of Service</button>
-      <button class="hero-chip" onclick="openToolSection(5)"><i data-lucide="user-minus"></i>Severance Agreement</button>
-      <button class="hero-chip" onclick="openToolSection(10)"><i data-lucide="file-check"></i>Job Offer / Employment</button>
-      <button class="hero-chip" onclick="openToolSection(2)"><i data-lucide="receipt"></i>Medical Bill</button>
-      <button class="hero-chip" onclick="openToolSection(1)"><i data-lucide="pen-line"></i>Contract Review</button>
-      <button class="hero-chip" onclick="openToolSection(3)"><i data-lucide="file-x"></i>Insurance Denial</button>
-      <button class="hero-chip" onclick="openToolSection(27)"><i data-lucide="lock"></i>NDA</button>
+      <button class="hero-chip" onclick="lookupWord('Arbitration')">Arbitration</button>
+      <button class="hero-chip" onclick="lookupWord('Indemnification')">Indemnification</button>
+      <button class="hero-chip" onclick="lookupWord('Force Majeure')">Force Majeure</button>
+      <button class="hero-chip" onclick="lookupWord('Non-Compete')">Non-Compete</button>
+      <button class="hero-chip" onclick="lookupWord('Deductible')">Deductible</button>
+      <button class="hero-chip" onclick="lookupWord('Security Deposit')">Security Deposit</button>
+      <button class="hero-chip" onclick="lookupWord('COBRA')">COBRA</button>
+      <button class="hero-chip" onclick="lookupWord('Statute of Limitations')">Statute of Limitations</button>
     </div>
   </div>
 </section>
 
 <!-- SMART SEARCH -->
-<div class="tool-search-wrap">
+<div class="tool-search-wrap" style="display:none">
   <div class="tool-search-inner">
     <p class="tool-search-label">Find the right analyzer</p>
     <div class="tool-search-box">
@@ -483,7 +501,7 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 </div>
 
 <!-- TOOL SELECTOR -->
-<div class="tools-section" id="toolsSection">
+<div class="tools-section" id="toolsSection" style="display:none">
 
   <!-- Sticky category navigation -->
   <div class="cat-nav-outer" id="catNav">
@@ -929,42 +947,17 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 
 <!-- INPUT -->
 <div class="input-wrap">
-  <div class="tool-context" id="toolContext">
-    <div class="tool-context-icon" id="ctxIcon"><i data-lucide="file-text"></i></div>
-    <div>
-      <div class="tool-context-name" id="ctxName">Terms of Service Analyzer</div>
-      <div class="tool-context-hint" id="ctxHint">Paste or upload any Terms of Service, privacy policy, EULA, or user agreement. Works with any app, website, or software.</div>
-    </div>
-  </div>
-  <div class="input-card">
-    <div class="input-tabs">
-      <button class="tab-btn active" onclick="switchTab('text',this)" data-i18n="tabText">Paste Text</button>
-      <button class="tab-btn" onclick="switchTab('pdf',this)" data-i18n="tabPdf">Upload PDF</button>
-    </div>
-    <div class="tab-content active" id="tab-text">
-      <div class="text-area-wrap">
-        <textarea id="docText" placeholder="Paste your document here…" oninput="updateBtn()"></textarea>
-        <span class="char-count" id="charCount">0 chars</span>
-      </div>
-    </div>
-    <div class="tab-content" id="tab-pdf">
-      <div class="pdf-zone" id="pdfZone" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave()">
-        <input type="file" accept=".pdf,.doc,.docx,.txt" multiple onchange="onFileSelect(event)" id="pdfInput">
-        <div class="pdf-icon-wrap">📄</div>
-        <h3 data-i18n="dropTitle">Drop files here</h3>
-        <p data-i18n="dropSub">or click to browse — hold Cmd to select multiple</p>
-      </div>
-      <div id="pdfFileList" style="display:none"></div>
-      <div class="pdf-loaded" id="pdfLoaded" style="display:none!important">
-        <div style="flex:1">
-          <div class="pdf-loaded-meta" id="pdfMeta"></div>
-        </div>
-        <button class="pdf-remove" onclick="removePdf()">Remove All</button>
-      </div>
+  <div class="input-card" style="border-radius:12px">
+    <div style="padding:1.5rem 1.5rem 1rem">
+      <input type="text" id="wordInput" class="word-search-input"
+             placeholder="Enter a word or phrase in any language…"
+             oninput="updateBtn()"
+             onkeydown="if(event.key==='Enter'&&!document.getElementById('analyzeBtn').disabled)analyze()"
+             autocomplete="off" spellcheck="false">
     </div>
     <div class="action-bar">
-      <span class="action-hint" id="actionHint">Paste text or upload a PDF to get started</span>
-      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()" disabled data-i18n="analyzeBtn">Analyze →</button>
+      <span class="action-hint" id="actionHint">Type any word — English or any other language</span>
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()" disabled>Look Up →</button>
     </div>
   </div>
   <div class="error-toast" id="errorToast"></div>
@@ -986,64 +979,35 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 
 <!-- RESULTS -->
 <div class="results-section" id="resultsSection">
-  <div id="verdictCard" class="verdict-card"></div>
-  <div class="doc-meta" id="docMeta"></div>
-  <div id="specialOutput"></div>
-  <div class="flags-header" id="flagsHeader">
-    <h2 class="flags-title" data-i18n="keyFindings">Key Findings</h2>
-    <span class="flags-meta" id="flagsMeta"></span>
-  </div>
-  <div id="flagsList"></div>
-  <div class="bottom-line" id="bottomLine"></div>
+  <div id="wordResultContent"></div>
   <div class="results-actions">
-    <button class="btn-outline" onclick="copyResults()" data-i18n="copySummary">📋 Copy Summary</button>
-    <button class="btn-outline" onclick="goHome()" data-i18n="analyzeAnother">← Analyze Another</button>
-    <button class="btn-filled" onclick="shareResults()" data-i18n="shareBtn">Share ↗</button>
-  </div>
-  <div class="share-bar" id="shareBar">
-    <span class="share-bar-label">🔗 Shareable link</span>
-    <span class="share-bar-url" id="shareBarUrl"></span>
-    <button class="share-copy-btn" onclick="copyShareLink()">Copy</button>
-  </div>
-
-  <!-- FOLLOW-UP CHAT -->
-  <div class="chat-section" id="chatSection">
-    <div class="chat-header">
-      <div>
-        <div class="chat-title" data-i18n="chatTitle">Ask a follow-up question</div>
-        <div class="chat-sub" data-i18n="chatSub">I have full context on your document — ask me anything</div>
-      </div>
-    </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-wrap">
-      <textarea class="chat-input" id="chatInput" placeholder="e.g. Can I cancel anytime? What happens if I miss a payment?" rows="2" onkeydown="chatKeydown(event)" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
-      <button class="chat-send" id="chatSend" onclick="sendChat()" data-i18n="chatSendBtn">Send →</button>
-    </div>
+    <button class="btn-outline" onclick="goHome()">← Look Up Another</button>
+    <button class="btn-filled" onclick="shareResults()">Share ↗</button>
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <section class="how-section" id="how">
-  <h2 class="how-title" data-i18n="howTitle">How Fineprint AI works</h2>
-  <p class="how-sub" data-i18n="howSub">Pick a tool, paste your document, get answers in plain English.</p>
+  <h2 class="how-title">How it works</h2>
+  <p class="how-sub">Type any word or phrase — in any language — and get a full breakdown instantly.</p>
   <div class="how-grid">
     <div class="how-card">
       <div class="how-num">01</div>
-      <div class="how-icon"><i data-lucide="crosshair"></i></div>
-      <h3 data-i18n="how1title">Pick your tool</h3>
-      <p data-i18n="how1desc">30 specialized analyzers, each built to spot the things that matter most for that document type.</p>
+      <div class="how-icon"><i data-lucide="search"></i></div>
+      <h3>Type your word</h3>
+      <p>Enter any word, phrase, or term — in English or any other language.</p>
     </div>
     <div class="how-card">
       <div class="how-num">02</div>
-      <div class="how-icon"><i data-lucide="scan-search"></i></div>
-      <h3 data-i18n="how2title">AI reads everything</h3>
-      <p data-i18n="how2desc">Our model scans every clause, code, and line — looking for patterns that cost real people real money.</p>
+      <div class="how-icon"><i data-lucide="brain"></i></div>
+      <h3>AI looks it up</h3>
+      <p>Our AI finds the definition, pronunciation, origin, and real-world usage in seconds.</p>
     </div>
     <div class="how-card">
       <div class="how-num">03</div>
-      <div class="how-icon"><i data-lucide="zap"></i></div>
-      <h3 data-i18n="how3title">Plain English results</h3>
-      <p data-i18n="how3desc">Risk-rated findings, concrete tips, and a bottom line — no law degree required.</p>
+      <div class="how-icon"><i data-lucide="file-text"></i></div>
+      <h3>Plain English + document context</h3>
+      <p>Know what a word means every day — and what it means when it shows up in a contract.</p>
     </div>
   </div>
 </section>
@@ -1051,8 +1015,8 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
 <!-- GLOSSARY -->
 <section class="glossary-section" id="glossary">
   <div class="glossary-inner">
-    <h2 class="glossary-title" data-i18n="glossaryTitle">Know the Terms</h2>
-    <p class="glossary-sub" data-i18n="glossarySub">The words companies use to confuse you — explained in plain English.</p>
+    <h2 class="glossary-title">Common Words to Know</h2>
+    <p class="glossary-sub">Click any word to look it up instantly.</p>
     <div class="glossary-tabs" id="glossaryTabs">
       <button class="glossary-tab active" onclick="switchGlossary('general',this)" data-i18n="glossaryTabGeneral">General</button>
       <button class="glossary-tab" onclick="switchGlossary('tos',this)" data-i18n="glossaryTabTos">Terms & Contracts</button>
@@ -1063,70 +1027,70 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
     </div>
 
     <div class="glossary-grid" id="glossary-general">
-      <div class="gterm-card"><div class="gterm-word">Arbitration</div><div class="gterm-def">A private process where a company-appointed arbitrator (not a judge) settles disputes. By agreeing to arbitration, you typically give up your right to sue in court or join a class action lawsuit.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Class Action Waiver</div><div class="gterm-def">A clause that stops you from joining a group lawsuit against a company. Instead of suing with thousands of others, you must fight alone — making small claims not worth pursuing.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Indemnification</div><div class="gterm-def">You agree to cover the company's legal costs and damages if something goes wrong — even if it wasn't your fault. This can be a blank check of liability.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Governing Law</div><div class="gterm-def">The state or country whose laws apply to any dispute. Companies often pick business-friendly states (like Delaware) so that local consumer protections don't apply to you.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Limitation of Liability</div><div class="gterm-def">A cap on how much a company owes you if they cause harm. Often limited to what you paid them — meaning a $10/month service caps its liability at $10 even if they lose your entire business.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Force Majeure</div><div class="gterm-def">"Act of God" clause — lets a party off the hook for not fulfilling the contract due to extraordinary events. Increasingly used broadly by companies to avoid obligations.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Severability</div><div class="gterm-def">If one part of a contract is found illegal or unenforceable, the rest of the contract still stands. This protects companies when individual clauses get struck down.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Assignment</div><div class="gterm-def">The company's right to transfer your contract to another company — like after a merger or acquisition — without your consent. Your agreement follows you to the new owner.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Arbitration')"><div class="gterm-word">Arbitration</div><div class="gterm-def">A private process where a company-appointed arbitrator (not a judge) settles disputes. By agreeing to arbitration, you typically give up your right to sue in court or join a class action lawsuit.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Class Action Waiver')"><div class="gterm-word">Class Action Waiver</div><div class="gterm-def">A clause that stops you from joining a group lawsuit against a company. Instead of suing with thousands of others, you must fight alone — making small claims not worth pursuing.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Indemnification')"><div class="gterm-word">Indemnification</div><div class="gterm-def">You agree to cover the company's legal costs and damages if something goes wrong — even if it wasn't your fault. This can be a blank check of liability.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Governing Law')"><div class="gterm-word">Governing Law</div><div class="gterm-def">The state or country whose laws apply to any dispute. Companies often pick business-friendly states (like Delaware) so that local consumer protections don't apply to you.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Limitation of Liability')"><div class="gterm-word">Limitation of Liability</div><div class="gterm-def">A cap on how much a company owes you if they cause harm. Often limited to what you paid them — meaning a $10/month service caps its liability at $10 even if they lose your entire business.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Force Majeure')"><div class="gterm-word">Force Majeure</div><div class="gterm-def">"Act of God" clause — lets a party off the hook for not fulfilling the contract due to extraordinary events. Increasingly used broadly by companies to avoid obligations.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Severability')"><div class="gterm-word">Severability</div><div class="gterm-def">If one part of a contract is found illegal or unenforceable, the rest of the contract still stands. This protects companies when individual clauses get struck down.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Assignment')"><div class="gterm-word">Assignment</div><div class="gterm-def">The company's right to transfer your contract to another company — like after a merger or acquisition — without your consent. Your agreement follows you to the new owner.</div></div>
     </div>
 
     <div class="glossary-grid" id="glossary-tos" style="display:none">
-      <div class="gterm-card"><div class="gterm-word">EULA</div><div class="gterm-def">End User License Agreement. The legal contract between you and a software company. You don't own the software — you're buying a license to use it, which can be revoked.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Intellectual Property (IP)</div><div class="gterm-def">Ownership of creative works. Many ToS agreements claim broad rights to content you create or upload on their platform — always check who actually owns what you post.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Perpetual License</div><div class="gterm-def">When you upload content, companies often claim a "perpetual, irrevocable license" to use it forever — even if you delete your account or cancel your subscription.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Auto-Renewal</div><div class="gterm-def">Your subscription automatically renews and charges your card unless you cancel before the renewal date. Cancellation windows are often short and deliberately hard to find.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Non-Disparagement</div><div class="gterm-def">You agree never to say anything negative about the company publicly — including honest negative reviews. Violating this can expose you to legal action.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Unilateral Modification</div><div class="gterm-def">The company can change the terms at any time, often with just an email notice or by posting an update on their website. Continuing to use the service means you agreed.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Non-Compete</div><div class="gterm-def">Restricts you from working for competitors or starting a competing business for a set period. Enforceability varies widely by state — some states like California ban them entirely.</div></div>
-      <div class="gterm-card"><div class="gterm-word">NDA (Non-Disclosure Agreement)</div><div class="gterm-def">You agree not to share confidential information. Scope matters — overly broad NDAs can prevent you from discussing your own work experience or even telling people where you work.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('EULA')"><div class="gterm-word">EULA</div><div class="gterm-def">End User License Agreement. The legal contract between you and a software company. You don't own the software — you're buying a license to use it, which can be revoked.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Intellectual Property')"><div class="gterm-word">Intellectual Property (IP)</div><div class="gterm-def">Ownership of creative works. Many ToS agreements claim broad rights to content you create or upload on their platform — always check who actually owns what you post.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Perpetual License')"><div class="gterm-word">Perpetual License</div><div class="gterm-def">When you upload content, companies often claim a "perpetual, irrevocable license" to use it forever — even if you delete your account or cancel your subscription.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Auto-Renewal')"><div class="gterm-word">Auto-Renewal</div><div class="gterm-def">Your subscription automatically renews and charges your card unless you cancel before the renewal date. Cancellation windows are often short and deliberately hard to find.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Non-Disparagement')"><div class="gterm-word">Non-Disparagement</div><div class="gterm-def">You agree never to say anything negative about the company publicly — including honest negative reviews. Violating this can expose you to legal action.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Unilateral Modification')"><div class="gterm-word">Unilateral Modification</div><div class="gterm-def">The company can change the terms at any time, often with just an email notice or by posting an update on their website. Continuing to use the service means you agreed.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Non-Compete')"><div class="gterm-word">Non-Compete</div><div class="gterm-def">Restricts you from working for competitors or starting a competing business for a set period. Enforceability varies widely by state — some states like California ban them entirely.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('NDA')"><div class="gterm-word">NDA (Non-Disclosure Agreement)</div><div class="gterm-def">You agree not to share confidential information. Scope matters — overly broad NDAs can prevent you from discussing your own work experience or even telling people where you work.</div></div>
     </div>
 
     <div class="glossary-grid" id="glossary-medical" style="display:none">
-      <div class="gterm-card"><div class="gterm-word">EOB (Explanation of Benefits)</div><div class="gterm-def">A statement from your insurer showing what was billed, what they paid, and what you owe. It is NOT a bill — but it tells you what bill is coming. Review it carefully for errors.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Deductible</div><div class="gterm-def">The amount you must pay out-of-pocket before your insurance starts covering costs. A $2,000 deductible means you pay the first $2,000 of covered services each year.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Out-of-Pocket Maximum</div><div class="gterm-def">The most you'll pay in a year before insurance covers 100% of covered costs. Once hit, you pay nothing more for covered services — knowing this number is crucial.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Prior Authorization</div><div class="gterm-def">Insurance requires advance approval before covering certain procedures or medications. Getting care without it is the most common reason claims get denied.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Balance Billing</div><div class="gterm-def">When an out-of-network provider bills you for the difference between their charge and what insurance paid. Illegal in many situations under the No Surprises Act (2022).</div></div>
-      <div class="gterm-card"><div class="gterm-word">Upcoding</div><div class="gterm-def">A billing error (sometimes fraud) where a provider bills for a more expensive service than what was actually performed. One of the most common causes of inflated medical bills.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Coordination of Benefits</div><div class="gterm-def">When you have two insurance plans, this determines which one pays first. If handled incorrectly, you might be billed for things your secondary insurance should cover.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Medical Necessity</div><div class="gterm-def">The standard insurers use to decide if a treatment is covered. If they deem something "not medically necessary," they deny the claim — but you can appeal with a doctor's documentation.</div></div>
-      <div class="gterm-card"><div class="gterm-word">In-Network vs. Out-of-Network</div><div class="gterm-def">In-network providers have contracts with your insurer at lower rates. Out-of-network providers can charge significantly more — always verify network status before a non-emergency procedure.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Explanation of Benefits')"><div class="gterm-word">EOB (Explanation of Benefits)</div><div class="gterm-def">A statement from your insurer showing what was billed, what they paid, and what you owe. It is NOT a bill — but it tells you what bill is coming. Review it carefully for errors.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Deductible')"><div class="gterm-word">Deductible</div><div class="gterm-def">The amount you must pay out-of-pocket before your insurance starts covering costs. A $2,000 deductible means you pay the first $2,000 of covered services each year.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Out-of-Pocket Maximum')"><div class="gterm-word">Out-of-Pocket Maximum</div><div class="gterm-def">The most you'll pay in a year before insurance covers 100% of covered costs. Once hit, you pay nothing more for covered services — knowing this number is crucial.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Prior Authorization')"><div class="gterm-word">Prior Authorization</div><div class="gterm-def">Insurance requires advance approval before covering certain procedures or medications. Getting care without it is the most common reason claims get denied.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Balance Billing')"><div class="gterm-word">Balance Billing</div><div class="gterm-def">When an out-of-network provider bills you for the difference between their charge and what insurance paid. Illegal in many situations under the No Surprises Act (2022).</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Upcoding')"><div class="gterm-word">Upcoding</div><div class="gterm-def">A billing error (sometimes fraud) where a provider bills for a more expensive service than what was actually performed. One of the most common causes of inflated medical bills.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Coordination of Benefits')"><div class="gterm-word">Coordination of Benefits</div><div class="gterm-def">When you have two insurance plans, this determines which one pays first. If handled incorrectly, you might be billed for things your secondary insurance should cover.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Medical Necessity')"><div class="gterm-word">Medical Necessity</div><div class="gterm-def">The standard insurers use to decide if a treatment is covered. If they deem something "not medically necessary," they deny the claim — but you can appeal with a doctor's documentation.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('In-Network vs Out-of-Network')"><div class="gterm-word">In-Network vs. Out-of-Network</div><div class="gterm-def">In-network providers have contracts with your insurer at lower rates. Out-of-network providers can charge significantly more — always verify network status before a non-emergency procedure.</div></div>
     </div>
 
     <div class="glossary-grid" id="glossary-severance" style="display:none">
-      <div class="gterm-card"><div class="gterm-word">ADEA Waiver</div><div class="gterm-def">The Age Discrimination in Employment Act protects workers 40+. To validly waive these rights in a severance agreement, you must be given 21 days to consider it and 7 days to revoke after signing.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Release of All Claims</div><div class="gterm-def">You permanently give up the right to sue your employer for anything that happened during your employment — discrimination, wage theft, harassment. This is the most consequential clause in any severance agreement.</div></div>
-      <div class="gterm-card"><div class="gterm-word">COBRA</div><div class="gterm-def">Allows you to continue your employer's health insurance after leaving — but you pay the full premium (employer + employee share). Usually very expensive. You have 60 days to elect coverage after job loss.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Garden Leave</div><div class="gterm-def">You remain on payroll during your notice period but don't work. Sounds good, but it delays your ability to start a new job and may affect when non-compete clocks start.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Non-Solicitation</div><div class="gterm-def">Restricts you from poaching former colleagues or clients after leaving. Different from non-compete — you can work in the same industry, you just can't recruit specific people.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Clawback Provision</div><div class="gterm-def">If you violate any term of the severance agreement (like non-disparagement), the company can demand back all severance payments already made — sometimes with interest.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Unemployment Eligibility</div><div class="gterm-def">Severance payments can delay or reduce unemployment benefits depending on your state. The structure of your severance (lump sum vs. salary continuation) often matters for eligibility.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Equity Acceleration</div><div class="gterm-def">Some severance agreements include vesting of unvested stock options or RSUs. Always check if you're leaving unvested equity on the table — this can be worth negotiating.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('ADEA Waiver')"><div class="gterm-word">ADEA Waiver</div><div class="gterm-def">The Age Discrimination in Employment Act protects workers 40+. To validly waive these rights in a severance agreement, you must be given 21 days to consider it and 7 days to revoke after signing.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Release of All Claims')"><div class="gterm-word">Release of All Claims</div><div class="gterm-def">You permanently give up the right to sue your employer for anything that happened during your employment — discrimination, wage theft, harassment. This is the most consequential clause in any severance agreement.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('COBRA')"><div class="gterm-word">COBRA</div><div class="gterm-def">Allows you to continue your employer's health insurance after leaving — but you pay the full premium (employer + employee share). Usually very expensive. You have 60 days to elect coverage after job loss.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Garden Leave')"><div class="gterm-word">Garden Leave</div><div class="gterm-def">You remain on payroll during your notice period but don't work. Sounds good, but it delays your ability to start a new job and may affect when non-compete clocks start.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Non-Solicitation')"><div class="gterm-word">Non-Solicitation</div><div class="gterm-def">Restricts you from poaching former colleagues or clients after leaving. Different from non-compete — you can work in the same industry, you just can't recruit specific people.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Clawback Provision')"><div class="gterm-word">Clawback Provision</div><div class="gterm-def">If you violate any term of the severance agreement (like non-disparagement), the company can demand back all severance payments already made — sometimes with interest.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Unemployment Eligibility')"><div class="gterm-word">Unemployment Eligibility</div><div class="gterm-def">Severance payments can delay or reduce unemployment benefits depending on your state. The structure of your severance (lump sum vs. salary continuation) often matters for eligibility.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Equity Acceleration')"><div class="gterm-word">Equity Acceleration</div><div class="gterm-def">Some severance agreements include vesting of unvested stock options or RSUs. Always check if you're leaving unvested equity on the table — this can be worth negotiating.</div></div>
     </div>
 
     <div class="glossary-grid" id="glossary-lease" style="display:none">
-      <div class="gterm-card"><div class="gterm-word">Security Deposit</div><div class="gterm-def">Money paid upfront to cover potential damages. Most states cap it (typically 1–2 months rent) and require itemized deductions returned within a specific timeframe — often 14–30 days after move-out.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Implied Warranty of Habitability</div><div class="gterm-def">A landlord's legal obligation to maintain a livable unit — heat, water, no pests, working locks. This right cannot be waived by a lease clause, even if you sign one that says otherwise.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Joint and Several Liability</div><div class="gterm-def">If you have roommates, each of you is individually responsible for the entire rent. If a roommate doesn't pay, the landlord can come after you alone for the full amount.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Early Termination Fee</div><div class="gterm-def">A penalty for breaking your lease early. Legitimate fees typically equal 1–2 months rent. Beware clauses requiring you to pay all remaining rent — some states limit or prohibit these.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Holdover Tenant</div><div class="gterm-def">If you stay past your lease end date without a new agreement, you become a holdover tenant. Landlords can often charge significantly higher rent — sometimes double — during this period.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Right of Entry</div><div class="gterm-def">Most states require landlords to give 24–48 hours notice before entering your unit except in emergencies. Lease clauses attempting to waive this requirement may be unenforceable.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Lease Guarantee</div><div class="gterm-def">A co-signer who agrees to pay if you don't. If a guarantor is required, they take on the same liability as you — including for the full lease term if you default.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Normal Wear and Tear</div><div class="gterm-def">Deterioration from ordinary use — scuffs on walls, carpet worn from walking. Landlords cannot charge you for this. They can only charge for damage beyond normal use. Document everything on move-in.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Security Deposit')"><div class="gterm-word">Security Deposit</div><div class="gterm-def">Money paid upfront to cover potential damages. Most states cap it (typically 1–2 months rent) and require itemized deductions returned within a specific timeframe — often 14–30 days after move-out.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Implied Warranty of Habitability')"><div class="gterm-word">Implied Warranty of Habitability</div><div class="gterm-def">A landlord's legal obligation to maintain a livable unit — heat, water, no pests, working locks. This right cannot be waived by a lease clause, even if you sign one that says otherwise.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Joint and Several Liability')"><div class="gterm-word">Joint and Several Liability</div><div class="gterm-def">If you have roommates, each of you is individually responsible for the entire rent. If a roommate doesn't pay, the landlord can come after you alone for the full amount.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Early Termination Fee')"><div class="gterm-word">Early Termination Fee</div><div class="gterm-def">A penalty for breaking your lease early. Legitimate fees typically equal 1–2 months rent. Beware clauses requiring you to pay all remaining rent — some states limit or prohibit these.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Holdover Tenant')"><div class="gterm-word">Holdover Tenant</div><div class="gterm-def">If you stay past your lease end date without a new agreement, you become a holdover tenant. Landlords can often charge significantly higher rent — sometimes double — during this period.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Right of Entry')"><div class="gterm-word">Right of Entry</div><div class="gterm-def">Most states require landlords to give 24–48 hours notice before entering your unit except in emergencies. Lease clauses attempting to waive this requirement may be unenforceable.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Lease Guarantee')"><div class="gterm-word">Lease Guarantee</div><div class="gterm-def">A co-signer who agrees to pay if you don't. If a guarantor is required, they take on the same liability as you — including for the full lease term if you default.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Normal Wear and Tear')"><div class="gterm-word">Normal Wear and Tear</div><div class="gterm-def">Deterioration from ordinary use — scuffs on walls, carpet worn from walking. Landlords cannot charge you for this. They can only charge for damage beyond normal use. Document everything on move-in.</div></div>
     </div>
 
     <div class="glossary-grid" id="glossary-debt" style="display:none">
-      <div class="gterm-card"><div class="gterm-word">FDCPA</div><div class="gterm-def">Fair Debt Collection Practices Act. A federal law that limits what debt collectors can do — no calling before 8am or after 9pm, no harassment, no false statements. Violations can be sued for $1,000 per violation.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Debt Validation</div><div class="gterm-def">Within 30 days of first contact, you can demand proof the debt is real and that the collector has the right to collect it. They must stop collection until they provide verification.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Statute of Limitations</div><div class="gterm-def">The time limit on how long a collector can sue you to collect a debt — typically 3–6 years depending on state and debt type. After this, the debt is "time-barred" and they can't win in court.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Zombie Debt</div><div class="gterm-def">Old, time-barred debt that collectors buy cheaply and try to resurrect. Making even a small payment can restart the statute of limitations clock, giving them a fresh window to sue you.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Cease and Desist</div><div class="gterm-def">A written request to stop all contact. Under the FDCPA, collectors must honor it — except to notify you of specific legal actions. Send it certified mail and keep a copy.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Charge-Off</div><div class="gterm-def">When a creditor writes off the debt as a loss (usually after 180 days of non-payment). The debt still exists and can be sold to collectors — a charge-off doesn't mean you don't owe it.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Debt Buyer</div><div class="gterm-def">Companies that purchase old debts for pennies on the dollar and then try to collect the full amount. They may have incomplete records and must still prove the debt is valid if challenged.</div></div>
-      <div class="gterm-card"><div class="gterm-word">Credit Reporting Window</div><div class="gterm-def">Most negative items (collections, charge-offs) can only stay on your credit report for 7 years from the original delinquency date — regardless of when debt was sold or re-aged by a collector.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('FDCPA')"><div class="gterm-word">FDCPA</div><div class="gterm-def">Fair Debt Collection Practices Act. A federal law that limits what debt collectors can do — no calling before 8am or after 9pm, no harassment, no false statements. Violations can be sued for $1,000 per violation.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Debt Validation')"><div class="gterm-word">Debt Validation</div><div class="gterm-def">Within 30 days of first contact, you can demand proof the debt is real and that the collector has the right to collect it. They must stop collection until they provide verification.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Statute of Limitations')"><div class="gterm-word">Statute of Limitations</div><div class="gterm-def">The time limit on how long a collector can sue you to collect a debt — typically 3–6 years depending on state and debt type. After this, the debt is "time-barred" and they can't win in court.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Zombie Debt')"><div class="gterm-word">Zombie Debt</div><div class="gterm-def">Old, time-barred debt that collectors buy cheaply and try to resurrect. Making even a small payment can restart the statute of limitations clock, giving them a fresh window to sue you.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Cease and Desist')"><div class="gterm-word">Cease and Desist</div><div class="gterm-def">A written request to stop all contact. Under the FDCPA, collectors must honor it — except to notify you of specific legal actions. Send it certified mail and keep a copy.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Charge-Off')"><div class="gterm-word">Charge-Off</div><div class="gterm-def">When a creditor writes off the debt as a loss (usually after 180 days of non-payment). The debt still exists and can be sold to collectors — a charge-off doesn't mean you don't owe it.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Debt Buyer')"><div class="gterm-word">Debt Buyer</div><div class="gterm-def">Companies that purchase old debts for pennies on the dollar and then try to collect the full amount. They may have incomplete records and must still prove the debt is valid if challenged.</div></div>
+      <div class="gterm-card" style="cursor:pointer" onclick="lookupWord('Credit Reporting Window')"><div class="gterm-word">Credit Reporting Window</div><div class="gterm-def">Most negative items (collections, charge-offs) can only stay on your credit report for 7 years from the original delinquency date — regardless of when debt was sold or re-aged by a collector.</div></div>
     </div>
   </div>
 </section>
@@ -3400,11 +3364,11 @@ function switchTab(tab,btn){
 }
 
 function updateBtn(){
-  const txt=document.getElementById('docText').value;
-  document.getElementById('charCount').textContent=txt.length.toLocaleString()+' chars';
-  const ready=(activeInputTab==='text'&&txt.trim().length>80)||(activeInputTab==='pdf'&&pdfText.length>80);
+  const input=document.getElementById('wordInput');
+  if(!input)return;
+  const ready=input.value.trim().length>0;
   document.getElementById('analyzeBtn').disabled=!ready;
-  document.getElementById('actionHint').textContent=ready?t('actionHintReady'):t('actionHintEmpty');
+  document.getElementById('actionHint').textContent=ready?'Press Enter or click Look Up':'Type any word — English or any other language';
 }
 
 function onDragOver(e){e.preventDefault();document.getElementById('pdfZone').classList.add('dragover')}
@@ -3524,116 +3488,87 @@ function showError(msg){
 
 async function analyze(){
   if(!currentUser){openAuthModal();return;}
-  const text=activeInputTab==='text'?document.getElementById('docText').value.trim():pdfText;
-  if(!text||text.length<80)return;
-  const tool=TOOLS[activeTool];
+  const wordInput=document.getElementById('wordInput');
+  const word=wordInput?wordInput.value.trim():'';
+  if(!word)return;
 
   document.querySelector('.input-wrap').style.display='none';
-  document.querySelector('.tools-section').style.display='none';
   document.querySelector('.hero').style.display='none';
   document.getElementById('loadingSection').style.display='block';
   document.getElementById('resultsSection').style.display='none';
-  document.getElementById('loadingTitle').textContent=tool.loadingTitle;
-  document.getElementById('loadingSteps').innerHTML=tool.loadingSteps.map(s=>`<div class="loading-step"><span class="step-dot"></span>${s}</div>`).join('');
+  document.getElementById('loadingTitle').textContent='Looking up your word\u2026';
+  document.getElementById('loadingSteps').innerHTML='';
   startProgressBar();
   window.scrollTo({top:0,behavior:'smooth'});
 
-  lastDocText=text;
-  const systemPrompt=`You must respond entirely in ${selectedLanguage}. All text fields in your JSON response (verdict_title, verdict_summary, flag names, explanations, quotes, tips, bottom_line, appeal_letter, etc.) must be written in ${selectedLanguage}. The document may be in any language — always respond in ${selectedLanguage}.`;
+  lastDocText=word;
+  const systemPrompt=`You must respond entirely in ${selectedLanguage}. Always respond with valid JSON only, no markdown fences.`;
+  const userPrompt=`Define the word or phrase: "${word}"\n\nReturn ONLY this JSON with no other text:\n{\n  "word": "exact word or phrase",\n  "pronunciation": "phonetic guide",\n  "part_of_speech": "noun / verb / adjective / phrase / etc",\n  "definition": "precise definition in 1-2 sentences",\n  "simple_explanation": "plain English explanation anyone can understand",\n  "example_sentence": "a natural everyday sentence using this word",\n  "etymology": "brief word origin",\n  "in_documents": "what this word means in legal contracts, leases, medical bills, or financial documents. Use empty string if not relevant.",\n  "related_words": ["word1", "word2", "word3"]\n}`;
   try{
     const res=await fetch('https://fineprint-qg9y.onrender.com/api/ai',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        text:tool.prompt(text),
+        text:userPrompt,
         systemPrompt,
         selectedLanguage,
-        maxTokens:8096
+        maxTokens:1024
       })
     });
-    if(!res.ok){const errBody=await res.json();console.error('API error details:',JSON.stringify(errBody));throw new Error('API '+res.status);}
+    if(!res.ok){throw new Error('API '+res.status);}
     const data=await res.json();
     const raw=data.content.map(b=>b.text||'').join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const result=JSON.parse(clean);
-    lastResult={...result,toolId:tool.id,toolName:tool.name};
-    renderResults(result,tool.id);
-    saveAnalysis(result,tool.id,tool.name,lastDocText).then(id=>{
-      showShareBar(id);
-      window.location.hash='r/'+id;
-    }).catch(err=>console.error('Save failed:',err));
+    lastResult=result;
+    renderResults(result);
   }catch(err){
     resetProgressBar();
     goHome();
-    showError(t('errorGeneric'));
+    showError('Something went wrong. Please try again.');
     console.error(err);
   }
 }
 
 
-function renderResults(r,toolId){
+function renderResults(r){
   completeProgressBar();
   document.getElementById('loadingSection').style.display='none';
   document.getElementById('resultsSection').style.display='block';
-  chatHistory=[];
-  document.getElementById('chatMessages').innerHTML='';
   window.scrollTo({top:0,behavior:'smooth'});
 
-  const em={safe:'✅',caution:'⚠️',danger:'🚨',info:'📋'};
-  const lm={safe:t('verdictSafe'),caution:t('verdictCaution'),danger:t('verdictDanger'),info:t('verdictInfo')};
-  document.getElementById('verdictCard').className=`verdict-card ${r.verdict}`;
-  document.getElementById('verdictCard').innerHTML=`
-    <div class="verdict-top">
-      <div class="verdict-emoji">${em[r.verdict]||'📋'}</div>
-      <div>
-        <div class="verdict-label">${lm[r.verdict]||'Review Required'}</div>
-        <div class="verdict-title">${r.verdict_title}</div>
-      </div>
-    </div>
-    <div class="verdict-summary">${r.verdict_summary}</div>`;
+  const relatedChips=r.related_words&&r.related_words.length
+    ?r.related_words.map(w=>`<span class="word-chip" onclick="lookupWord('${w.replace(/'/g,'&#39;')}')">${w}</span>`).join('')
+    :'';
 
-  document.getElementById('docMeta').innerHTML=`
-    <span class="doc-meta-pill">📄 ${r.document_type}</span>
-    <span class="doc-meta-pill">🏢 ${r.company_or_subject}</span>
-    <span class="doc-meta-pill">📏 ${r.word_count_estimate}</span>`;
-
-  // Special output: appeal letter
-  const special=document.getElementById('specialOutput');
-  if(toolId==='appeal'&&r.appeal_letter){
-    special.innerHTML=`
-      <div class="appeal-letter">
-        <div class="appeal-letter-header">
-          <div class="appeal-letter-title">${t('appealLetterTitle')}</div>
-          <button class="appeal-copy-btn" onclick="copyLetter()">${t('copyLetter')}</button>
+  document.getElementById('wordResultContent').innerHTML=`
+    <div class="word-result-card">
+      <div class="word-result-header">
+        <div>
+          <div class="word-result-word">${r.word||''}</div>
+          ${r.part_of_speech?`<div class="word-result-pos">${r.part_of_speech}</div>`:''}
         </div>
-        <div class="appeal-body" id="appealLetterText">${r.appeal_letter}</div>
-      </div>`;
-  }else{
-    special.innerHTML='';
-  }
-
-  // Flags
-  const high=r.flags.filter(f=>f.risk==='high').length;
-  const med=r.flags.filter(f=>f.risk==='medium').length;
-  const low=r.flags.filter(f=>f.risk==='low').length;
-  document.getElementById('flagsMeta').textContent=`${high} high · ${med} medium · ${low} low`;
-  document.getElementById('flagsList').innerHTML=r.flags.map((f,i)=>`
-    <div class="flag-card${f.risk==='high'?' open':''}" id="flag-${i}">
-      <div class="flag-header" onclick="toggleFlag(${i})">
-        <span class="risk-pill ${f.risk}">${f.risk==='high'?'🔴 High':f.risk==='medium'?'🟡 Medium':'🟢 Low'}</span>
-        <span class="flag-name">${f.name}</span>
-        <span class="flag-chevron">▼</span>
+        ${r.pronunciation?`<div class="word-result-pron">${r.pronunciation}</div>`:''}
       </div>
-      <div class="flag-body">
-        <div class="flag-explanation">${f.explanation}</div>
-        ${f.quote?`<div class="flag-quote">"${f.quote}"</div>`:''}
-        <div class="flag-tip"><span>💡</span><span>${f.tip}</span></div>
-      </div>
-    </div>`).join('');
-
-  document.getElementById('bottomLine').innerHTML=`
-    <div class="bottom-line-label">${t('bottomLineLabel')}</div>
-    <div class="bottom-line-text">${r.bottom_line}</div>`;
+      <div class="word-result-def">${r.definition||''}</div>
+      ${r.simple_explanation?`<div class="word-result-simple">${r.simple_explanation}</div>`:''}
+      ${r.example_sentence?`<div class="word-result-example">e.g. &ldquo;${r.example_sentence}&rdquo;</div>`:''}
+      ${r.in_documents?`
+        <div class="word-result-section">
+          <div class="word-result-section-label">In Documents</div>
+          <div class="word-result-section-body">${r.in_documents}</div>
+        </div>`:''}
+      ${r.etymology?`
+        <div class="word-result-section">
+          <div class="word-result-section-label">Origin</div>
+          <div class="word-result-section-body">${r.etymology}</div>
+        </div>`:''}
+      ${relatedChips?`
+        <div class="word-result-section">
+          <div class="word-result-section-label">Related Words</div>
+          <div class="word-result-chips">${relatedChips}</div>
+        </div>`:''}
+    </div>`;
 }
 
 function toggleFlag(i){document.getElementById('flag-'+i).classList.toggle('open')}
@@ -3646,15 +3581,17 @@ function switchGlossary(cat,btn){
 }
 
 function goHome(){
+  resetProgressBar();
   document.querySelector('.hero').style.display='block';
-  document.querySelector('.tools-section').style.display='block';
   document.querySelector('.input-wrap').style.display='block';
   document.getElementById('loadingSection').style.display='none';
   document.getElementById('resultsSection').style.display='none';
-  document.getElementById('docText').value='';
-  document.getElementById('shareBar').classList.remove('show');
+  lastResult=null;
+  lastDocText='';
   window.location.hash='';
-  removePdf();updateBtn();
+  const wi=document.getElementById('wordInput');
+  if(wi)wi.value='';
+  updateBtn();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -3724,6 +3661,16 @@ async function sendChat(){
   }
   sendBtn.disabled=false;
   input.focus();
+}
+
+function lookupWord(word){
+  document.querySelector('.hero').style.display='block';
+  document.querySelector('.input-wrap').style.display='block';
+  document.getElementById('resultsSection').style.display='none';
+  const wi=document.getElementById('wordInput');
+  if(wi){wi.value=word;updateBtn();}
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>analyze(),80);
 }
 
 function shareResults(){
