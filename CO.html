@@ -3541,7 +3541,7 @@ async function analyze(){
   lastDocText=text;
   const systemPrompt=`You must respond entirely in ${selectedLanguage}. All text fields in your JSON response (verdict_title, verdict_summary, flag names, explanations, quotes, tips, bottom_line, appeal_letter, etc.) must be written in ${selectedLanguage}. The document may be in any language — always respond in ${selectedLanguage}.`;
   try{
-    const res=await fetch('http://localhost:3001/api/ai',{
+    const res=await fetch('https://fineprint-qg9y.onrender.com/api/ai',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -3707,7 +3707,7 @@ async function sendChat(){
   const systemPrompt=`You are a helpful AI assistant for Fineprint AI. Always respond in ${selectedLanguage}. The user just had their document analyzed. Here is the analysis result:\n\n${JSON.stringify(lastResult,null,2)}\n\nHere is the original document text (truncated if long):\n${lastDocText.substring(0,8000)}\n\nAnswer any questions the user has — whether about their document, general advice, related topics, or anything else. Be concise, friendly, and helpful. Do not repeat the full analysis unless asked.`;
 
   try{
-    const res=await fetch('http://localhost:3001/api/ai',{
+    const res=await fetch('https://fineprint-qg9y.onrender.com/api/ai',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({messages:chatHistory,systemPrompt,selectedLanguage,maxTokens:1024})
