@@ -3461,7 +3461,7 @@ async function analyze(){
     renderResults(result,tool.id);
     saveAnalysis(result,tool.id,tool.name,lastDocText).then(id=>{
       showShareBar(id);
-      window.location.hash='r/'+id;
+      history.replaceState({page:'results'},'','#r/'+id);
     }).catch(err=>console.error('Save failed:',err));
   }catch(err){
     resetProgressBar();
