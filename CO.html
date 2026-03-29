@@ -3472,12 +3472,13 @@ async function analyze(){
 }
 
 
-function renderResults(r,toolId){
+function renderResults(r,toolId,pushState=true){
   completeProgressBar();
   document.getElementById('loadingSection').style.display='none';
   document.getElementById('resultsSection').style.display='block';
   chatHistory=[];
   document.getElementById('chatMessages').innerHTML='';
+  if(pushState) history.pushState({page:'results'}, '');
   window.scrollTo({top:0,behavior:'smooth'});
 
   const em={safe:'✅',caution:'⚠️',danger:'🚨',info:'📋'};
@@ -3648,7 +3649,8 @@ function switchGlossary(cat,btn){
   btn.classList.add('active');
 }
 
-function goHome(){
+function showHomeView(){
+  resetProgressBar();
   document.querySelector('.hero').style.display='block';
   document.querySelector('.tools-section').style.display='block';
   document.querySelector('.input-wrap').style.display='block';
@@ -3656,10 +3658,20 @@ function goHome(){
   document.getElementById('resultsSection').style.display='none';
   document.getElementById('docText').value='';
   document.getElementById('shareBar').classList.remove('show');
-  window.location.hash='';
   removePdf();updateBtn();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function goHome(){
+  if(history.state&&history.state.page==='results'){history.back();}
+  else{showHomeView();}
+}
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.page==='results'&&lastResult){
+    renderResults(lastResult,lastResult.toolId,false);
+  } else {
+    showHomeView();
+  }
+});
 
 function copyLetter(){
   const el=document.getElementById('appealLetterText');
@@ -3739,7 +3751,7 @@ function shareResults(){
 }
 
 // Initialize Lucide icons after DOM is ready
-document.addEventListener('DOMContentLoaded',()=>{applyTranslations();lucide.createIcons();renderGlossary(GLOSSARY_DATA);});
+document.addEventListener('DOMContentLoaded',()=>{applyTranslations();lucide.createIcons();renderGlossary(GLOSSARY_DATA);history.replaceState({page:'home'},'');});
 </script>
 </body>
 </html>
