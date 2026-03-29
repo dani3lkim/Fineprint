@@ -3465,7 +3465,7 @@ async function analyze(){
     }).catch(err=>console.error('Save failed:',err));
   }catch(err){
     resetProgressBar();
-    goHome();
+    showHomeView();
     showError(t('errorGeneric'));
     console.error(err);
   }
