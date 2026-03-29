@@ -1228,29 +1228,6 @@ function copyShareLink(){
   });
 }
 
-// ── DEEP LINK: load result from URL hash on page load ─────────────────────
-window.addEventListener('load',async()=>{
-  const hash=window.location.hash;
-  if(hash.startsWith('#r/')){
-    const id=hash.slice(3);
-    try{
-      const doc=await db.collection('analyses').doc(id).get();
-      if(doc.exists){
-        const d=doc.data();
-        lastResult={...d.result,toolId:d.toolId,toolName:d.toolName};
-        currentAnalysisId=id;
-        const toolIdx=TOOLS.findIndex(t=>t.id===d.toolId);
-        if(toolIdx>=0)activeTool=toolIdx;
-        document.querySelector('.hero').style.display='none';
-        document.querySelector('.tools-section').style.display='none';
-        document.querySelector('.input-wrap').style.display='none';
-        document.getElementById('loadingSection').style.display='none';
-        renderResults(d.result,d.toolId);
-        showShareBar(id);
-      }
-    }catch(err){console.error('Deep link load failed:',err);}
-  }
-});
 
 let activeTool=0, activeInputTab='text', pdfText='', lastResult=null, chatHistory=[], lastDocText='', loadedFiles=[], selectedLanguage='English';
 
@@ -3751,7 +3728,7 @@ function shareResults(){
 }
 
 // Initialize Lucide icons after DOM is ready
-document.addEventListener('DOMContentLoaded',()=>{applyTranslations();lucide.createIcons();renderGlossary(GLOSSARY_DATA);history.replaceState({page:'home'},'');});
+document.addEventListener('DOMContentLoaded',()=>{applyTranslations();lucide.createIcons();renderGlossary(GLOSSARY_DATA);history.replaceState({page:'home'},'',location.pathname+location.search);});
 </script>
 </body>
 </html>
