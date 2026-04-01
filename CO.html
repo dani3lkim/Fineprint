@@ -160,6 +160,15 @@ mark.sh{background:rgba(212,56,13,0.12);color:var(--accent);border-radius:2px;pa
 .analyze-btn:disabled{opacity:0.4;cursor:not-allowed}
 .error-toast{display:none;background:#fff1ee;border:1px solid rgba(212,56,13,0.2);color:var(--accent);font-size:0.8rem;padding:0.7rem 1.1rem;border-radius:8px;margin-top:0.75rem;text-align:center}
 .error-toast.show{display:block}
+.image-zone{padding:2.2rem 2rem;text-align:center;cursor:pointer;transition:background 0.2s;position:relative;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.image-zone:hover{background:var(--bg)}
+.image-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.image-icon-wrap{width:44px;height:44px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.9rem;font-size:1.3rem}
+.image-preview-wrap{padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;background:var(--blue-bg);border-top:1px solid rgba(26,95,168,0.15)}
+.image-preview-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0}
+.image-preview-info{flex:1;min-width:0}
+.image-preview-name{font-weight:500;font-size:0.82rem;margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.image-preview-size{font-size:0.7rem;color:var(--blue)}
 
 /* LOADING */
 .loading-section{display:none;max-width:760px;margin:0 auto;padding:0 2rem 4rem}
@@ -947,6 +956,7 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
     <div class="input-tabs">
       <button class="tab-btn active" onclick="switchTab('text',this)" data-i18n="tabText">Paste Text</button>
       <button class="tab-btn" onclick="switchTab('pdf',this)" data-i18n="tabPdf">Upload PDF</button>
+      <button class="tab-btn" onclick="switchTab('image',this)">📸 Camera / Image</button>
     </div>
     <div class="tab-content active" id="tab-text">
       <div class="text-area-wrap">
@@ -967,6 +977,22 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
           <div class="pdf-loaded-meta" id="pdfMeta"></div>
         </div>
         <button class="pdf-remove" onclick="removePdf()">Remove All</button>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-image">
+      <div class="image-zone" id="imageZone">
+        <input type="file" accept="image/*" capture="environment" onchange="onImageSelect(event)" id="imageInput">
+        <div class="image-icon-wrap">📸</div>
+        <h3>Take a photo or upload an image</h3>
+        <p>Point your camera at any physical document, or upload a screenshot</p>
+      </div>
+      <div class="image-preview-wrap" id="imagePreview" style="display:none">
+        <img class="image-preview-thumb" id="imageThumb" src="" alt="preview">
+        <div class="image-preview-info">
+          <div class="image-preview-name" id="imagePreviewName"></div>
+          <div class="image-preview-size" id="imagePreviewSize">Ready to analyze</div>
+        </div>
+        <button class="pdf-remove" onclick="removeImage()">Remove</button>
       </div>
     </div>
     <div class="action-bar">
@@ -1229,7 +1255,7 @@ function copyShareLink(){
 }
 
 
-let activeTool=0, activeInputTab='text', pdfText='', lastResult=null, chatHistory=[], lastDocText='', loadedFiles=[], selectedLanguage='English';
+let activeTool=0, activeInputTab='text', pdfText='', imageData=null, lastResult=null, chatHistory=[], lastDocText='', loadedFiles=[], selectedLanguage='English';
 
 const TRANSLATIONS={
   English:{
@@ -3280,7 +3306,7 @@ function switchTab(tab,btn){
 function updateBtn(){
   const txt=document.getElementById('docText').value;
   document.getElementById('charCount').textContent=txt.length.toLocaleString()+' chars';
-  const ready=(activeInputTab==='text'&&txt.trim().length>80)||(activeInputTab==='pdf'&&pdfText.length>80);
+  const ready=(activeInputTab==='text'&&txt.trim().length>80)||(activeInputTab==='pdf'&&pdfText.length>80)||(activeInputTab==='image'&&imageData!==null);
   document.getElementById('analyzeBtn').disabled=!ready;
   document.getElementById('actionHint').textContent=ready?t('actionHintReady'):t('actionHintEmpty');
 }
@@ -3289,6 +3315,33 @@ function onDragOver(e){e.preventDefault();document.getElementById('pdfZone').cla
 function onDragLeave(){document.getElementById('pdfZone').classList.remove('dragover')}
 function onDrop(e){e.preventDefault();document.getElementById('pdfZone').classList.remove('dragover');const files=Array.from(e.dataTransfer.files);if(files.length)addFiles(files)}
 function onFileSelect(e){const files=Array.from(e.target.files);if(files.length){addFiles(files);e.target.value='';}}
+
+function onImageSelect(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const dataUrl=ev.target.result;
+    const base64=dataUrl.split(',')[1];
+    imageData={base64,mediaType:file.type||'image/jpeg',name:file.name,size:file.size};
+    document.getElementById('imageThumb').src=dataUrl;
+    document.getElementById('imagePreviewName').textContent=file.name;
+    document.getElementById('imagePreviewSize').textContent=(file.size/1024).toFixed(0)+' KB · Ready to analyze';
+    document.getElementById('imageZone').style.display='none';
+    document.getElementById('imagePreview').style.display='flex';
+    updateBtn();
+  };
+  reader.readAsDataURL(file);
+  e.target.value='';
+}
+
+function removeImage(){
+  imageData=null;
+  document.getElementById('imageThumb').src='';
+  document.getElementById('imageZone').style.display='';
+  document.getElementById('imagePreview').style.display='none';
+  updateBtn();
+}
 
 async function addFiles(newFiles){
   for(const file of newFiles){
@@ -3402,8 +3455,10 @@ function showError(msg){
 
 async function analyze(){
   if(!currentUser){openAuthModal();return;}
+  const isImage=activeInputTab==='image';
   const text=activeInputTab==='text'?document.getElementById('docText').value.trim():pdfText;
-  if(!text||text.length<80)return;
+  if(!isImage&&(!text||text.length<80))return;
+  if(isImage&&!imageData)return;
   const tool=TOOLS[activeTool];
 
   document.querySelector('.input-wrap').style.display='none';
@@ -3416,18 +3471,30 @@ async function analyze(){
   startProgressBar();
   window.scrollTo({top:0,behavior:'smooth'});
 
-  lastDocText=text;
+  lastDocText=isImage?`[Image: ${imageData.name}]`:text;
   const systemPrompt=`You must respond entirely in ${selectedLanguage}. All text fields in your JSON response (verdict_title, verdict_summary, flag names, explanations, quotes, tips, bottom_line, appeal_letter, etc.) must be written in ${selectedLanguage}. The document may be in any language — always respond in ${selectedLanguage}.`;
+
+  let requestBody;
+  if(isImage){
+    const imgPromptText=tool.prompt('The document is shown in the image above. Extract all visible text from the image and analyze it as instructed.');
+    requestBody={
+      messages:[{role:'user',content:[
+        {type:'image',source:{type:'base64',media_type:imageData.mediaType,data:imageData.base64}},
+        {type:'text',text:imgPromptText}
+      ]}],
+      systemPrompt,
+      selectedLanguage,
+      maxTokens:8096
+    };
+  }else{
+    requestBody={text:tool.prompt(text),systemPrompt,selectedLanguage,maxTokens:8096};
+  }
+
   try{
     const res=await fetch('https://fineprint-qg9y.onrender.com/api/ai',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        text:tool.prompt(text),
-        systemPrompt,
-        selectedLanguage,
-        maxTokens:8096
-      })
+      body:JSON.stringify(requestBody)
     });
     if(!res.ok){const errBody=await res.json();console.error('API error details:',JSON.stringify(errBody));throw new Error('API '+res.status);}
     const data=await res.json();
