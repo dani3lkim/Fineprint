@@ -3321,15 +3321,26 @@ function onImageSelect(e){
   if(!file)return;
   const reader=new FileReader();
   reader.onload=function(ev){
-    const dataUrl=ev.target.result;
-    const base64=dataUrl.split(',')[1];
-    imageData={base64,mediaType:file.type||'image/jpeg',name:file.name,size:file.size};
-    document.getElementById('imageThumb').src=dataUrl;
-    document.getElementById('imagePreviewName').textContent=file.name;
-    document.getElementById('imagePreviewSize').textContent=(file.size/1024).toFixed(0)+' KB · Ready to analyze';
-    document.getElementById('imageZone').style.display='none';
-    document.getElementById('imagePreview').style.display='flex';
-    updateBtn();
+    const img=new Image();
+    img.onload=function(){
+      const MAX=1600;
+      let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const dataUrl=canvas.toDataURL('image/jpeg',0.85);
+      const base64=dataUrl.split(',')[1];
+      const kb=Math.round(base64.length*0.75/1024);
+      imageData={base64,mediaType:'image/jpeg',name:file.name,size:kb*1024};
+      document.getElementById('imageThumb').src=dataUrl;
+      document.getElementById('imagePreviewName').textContent=file.name;
+      document.getElementById('imagePreviewSize').textContent=kb+' KB · Ready to analyze';
+      document.getElementById('imageZone').style.display='none';
+      document.getElementById('imagePreview').style.display='flex';
+      updateBtn();
+    };
+    img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
   e.target.value='';
