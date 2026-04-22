@@ -1029,6 +1029,13 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
   </div>
   <div id="flagsList"></div>
   <div class="bottom-line" id="bottomLine"></div>
+  <div id="guestNudge" style="display:none;align-items:center;justify-content:space-between;gap:1rem;background:#1a1814;color:#f7f5f0;border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:1rem;flex-wrap:wrap">
+    <div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:0.2rem">That was your free analysis</div>
+      <div style="font-size:0.78rem;color:#8a8278">Sign in to run unlimited analyses and save your history — it's free.</div>
+    </div>
+    <button onclick="openAuthModal()" style="font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:500;color:#1a1814;background:#f7f5f0;border:none;padding:0.65rem 1.4rem;border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0">Sign In / Sign Up →</button>
+  </div>
   <div class="results-actions">
     <button class="btn-outline" onclick="copyResults()" data-i18n="copySummary">📋 Copy Summary</button>
     <button class="btn-outline" onclick="downloadPdf()" data-i18n="downloadPdf">⬇ Download PDF</button>
@@ -1086,6 +1093,10 @@ let authMode='signin';
 auth.onAuthStateChanged(user=>{
   currentUser=user;
   updateAuthUI();
+  if(user){
+    const n=document.getElementById('guestNudge');
+    if(n) n.style.display='none';
+  }
 });
 
 function updateAuthUI(){
@@ -3469,7 +3480,13 @@ function showError(msg){
 }
 
 async function analyze(){
-  if(!currentUser){openAuthModal();return;}
+  if(!currentUser){
+    if(localStorage.getItem('guestAnalysisUsed')){
+      document.getElementById('authModalSub').textContent="You've used your free analysis. Sign in to keep going — it's free.";
+      openAuthModal();
+      return;
+    }
+  }
   const isImage=activeInputTab==='image';
   const text=activeInputTab==='text'?document.getElementById('docText').value.trim():pdfText;
   if(!isImage&&(!text||text.length<80))return;
@@ -3517,6 +3534,7 @@ async function analyze(){
     const clean=raw.replace(/```json|```/g,'').trim();
     const result=JSON.parse(clean);
     lastResult={...result,toolId:tool.id,toolName:tool.name};
+    if(!currentUser) localStorage.setItem('guestAnalysisUsed','true');
     renderResults(result,tool.id);
     saveAnalysis(result,tool.id,tool.name,lastDocText).then(id=>{
       showShareBar(id);
@@ -3595,6 +3613,9 @@ function renderResults(r,toolId,pushState=true){
   document.getElementById('bottomLine').innerHTML=`
     <div class="bottom-line-label">${t('bottomLineLabel')}</div>
     <div class="bottom-line-text">${r.bottom_line}</div>`;
+
+  const guestNudge=document.getElementById('guestNudge');
+  if(guestNudge) guestNudge.style.display=currentUser?'none':'flex';
 }
 
 function toggleFlag(i){document.getElementById('flag-'+i).classList.toggle('open')}
