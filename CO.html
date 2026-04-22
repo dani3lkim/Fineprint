@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -1030,6 +1031,7 @@ footer{border-top:1px solid var(--border);padding:1.4rem 2.5rem;display:flex;ali
   <div class="bottom-line" id="bottomLine"></div>
   <div class="results-actions">
     <button class="btn-outline" onclick="copyResults()" data-i18n="copySummary">📋 Copy Summary</button>
+    <button class="btn-outline" onclick="downloadPdf()" data-i18n="downloadPdf">⬇ Download PDF</button>
     <button class="btn-outline" onclick="goHome()" data-i18n="analyzeAnother">← Analyze Another</button>
     <button class="btn-filled" onclick="shareResults()" data-i18n="shareBtn">Share ↗</button>
   </div>
@@ -1273,7 +1275,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Paste text or upload a PDF to get started',actionHintReady:'Ready — click to analyze',
     analyzeBtn:'Analyze →',loadingSub:'This takes about 15–30 seconds',
     keyFindings:'Key Findings',bottomLineLabel:'Bottom Line',
-    copySummary:'📋 Copy Summary',analyzeAnother:'← Analyze Another',shareBtn:'Share ↗',
+    copySummary:'📋 Copy Summary',downloadPdf:'⬇ Download PDF',analyzeAnother:'← Analyze Another',shareBtn:'Share ↗',
     chatTitle:'Ask a follow-up question',chatSub:'I have full context on your document — ask me anything',
     chatPlaceholder:'e.g. Can I cancel anytime? What happens if I miss a payment?',chatSendBtn:'Send →',
     howTitle:'How Fineprint AI works',howSub:'Pick a tool, paste your document, get answers in plain English.',
@@ -1339,7 +1341,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Pega texto o sube un PDF para comenzar',actionHintReady:'Listo — haz clic para analizar',
     analyzeBtn:'Analizar →',loadingSub:'Esto tarda unos 15–30 segundos',
     keyFindings:'Hallazgos Clave',bottomLineLabel:'Conclusión',
-    copySummary:'📋 Copiar Resumen',analyzeAnother:'← Analizar Otro',shareBtn:'Compartir ↗',
+    copySummary:'📋 Copiar Resumen',downloadPdf:'⬇ Descargar PDF',analyzeAnother:'← Analizar Otro',shareBtn:'Compartir ↗',
     chatTitle:'Haz una pregunta de seguimiento',chatSub:'Tengo el contexto completo de tu documento — pregúntame lo que quieras',
     chatPlaceholder:'ej. ¿Puedo cancelar en cualquier momento? ¿Qué pasa si no pago?',chatSendBtn:'Enviar →',
     howTitle:'Cómo funciona Fineprint AI',howSub:'Elige una herramienta, pega tu documento, obtén respuestas en lenguaje claro.',
@@ -1404,7 +1406,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Collez du texte ou téléchargez un PDF pour commencer',actionHintReady:'Prêt — cliquez pour analyser',
     analyzeBtn:'Analyser →',loadingSub:'Cela prend environ 15–30 secondes',
     keyFindings:'Résultats Clés',bottomLineLabel:'Conclusion',
-    copySummary:'📋 Copier le Résumé',analyzeAnother:'← Analyser un Autre',shareBtn:'Partager ↗',
+    copySummary:'📋 Copier le Résumé',downloadPdf:'⬇ Télécharger PDF',analyzeAnother:'← Analyser un Autre',shareBtn:'Partager ↗',
     chatTitle:'Posez une question de suivi',chatSub:'J\'ai le contexte complet de votre document — posez-moi n\'importe quelle question',
     chatPlaceholder:'ex. Puis-je annuler à tout moment ? Que se passe-t-il si je rate un paiement ?',chatSendBtn:'Envoyer →',
     howTitle:'Comment fonctionne Fineprint AI',howSub:'Choisissez un outil, collez votre document, obtenez des réponses en langage clair.',
@@ -1469,7 +1471,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Text einfügen oder PDF hochladen, um zu beginnen',actionHintReady:'Bereit — zum Analysieren klicken',
     analyzeBtn:'Analysieren →',loadingSub:'Dies dauert etwa 15–30 Sekunden',
     keyFindings:'Wichtige Erkenntnisse',bottomLineLabel:'Fazit',
-    copySummary:'📋 Zusammenfassung Kopieren',analyzeAnother:'← Weiteres Analysieren',shareBtn:'Teilen ↗',
+    copySummary:'📋 Zusammenfassung Kopieren',downloadPdf:'⬇ PDF Herunterladen',analyzeAnother:'← Weiteres Analysieren',shareBtn:'Teilen ↗',
     chatTitle:'Stellen Sie eine Folgefrage',chatSub:'Ich habe den vollen Kontext Ihres Dokuments — fragen Sie mich alles',
     chatPlaceholder:'z.B. Kann ich jederzeit kündigen? Was passiert, wenn ich eine Zahlung verpasse?',chatSendBtn:'Senden →',
     howTitle:'Wie Fineprint AI funktioniert',howSub:'Wählen Sie ein Tool, fügen Sie Ihr Dokument ein, erhalten Sie Antworten in klarer Sprache.',
@@ -1534,7 +1536,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Cole texto ou envie um PDF para começar',actionHintReady:'Pronto — clique para analisar',
     analyzeBtn:'Analisar →',loadingSub:'Isso leva cerca de 15–30 segundos',
     keyFindings:'Principais Descobertas',bottomLineLabel:'Conclusão',
-    copySummary:'📋 Copiar Resumo',analyzeAnother:'← Analisar Outro',shareBtn:'Compartilhar ↗',
+    copySummary:'📋 Copiar Resumo',downloadPdf:'⬇ Baixar PDF',analyzeAnother:'← Analisar Outro',shareBtn:'Compartilhar ↗',
     chatTitle:'Faça uma pergunta de acompanhamento',chatSub:'Tenho o contexto completo do seu documento — pergunte o que quiser',
     chatPlaceholder:'ex. Posso cancelar a qualquer momento? O que acontece se eu perder um pagamento?',chatSendBtn:'Enviar →',
     howTitle:'Como o Fineprint AI funciona',howSub:'Escolha uma ferramenta, cole seu documento, obtenha respostas em linguagem simples.',
@@ -1599,7 +1601,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Incolla testo o carica un PDF per iniziare',actionHintReady:'Pronto — clicca per analizzare',
     analyzeBtn:'Analizza →',loadingSub:'Questo richiede circa 15–30 secondi',
     keyFindings:'Risultati Chiave',bottomLineLabel:'Conclusione',
-    copySummary:'📋 Copia Riepilogo',analyzeAnother:'← Analizza un Altro',shareBtn:'Condividi ↗',
+    copySummary:'📋 Copia Riepilogo',downloadPdf:'⬇ Scarica PDF',analyzeAnother:'← Analizza un Altro',shareBtn:'Condividi ↗',
     chatTitle:'Fai una domanda di follow-up',chatSub:'Ho il contesto completo del tuo documento — chiedimi qualsiasi cosa',
     chatPlaceholder:'es. Posso annullare in qualsiasi momento? Cosa succede se salto un pagamento?',chatSendBtn:'Invia →',
     howTitle:'Come funziona Fineprint AI',howSub:'Scegli uno strumento, incolla il tuo documento, ottieni risposte in italiano chiaro.',
@@ -1664,7 +1666,7 @@ const TRANSLATIONS={
     actionHintEmpty:'粘贴文本或上传PDF以开始',actionHintReady:'准备就绪——点击分析',
     analyzeBtn:'分析 →',loadingSub:'大约需要15–30秒',
     keyFindings:'主要发现',bottomLineLabel:'总结',
-    copySummary:'📋 复制摘要',analyzeAnother:'← 分析其他文件',shareBtn:'分享 ↗',
+    copySummary:'📋 复制摘要',downloadPdf:'⬇ 下载PDF',analyzeAnother:'← 分析其他文件',shareBtn:'分享 ↗',
     chatTitle:'提问跟进问题',chatSub:'我拥有你文件的完整内容——随时向我提问',
     chatPlaceholder:'例如：我可以随时取消吗？如果我错过付款会怎样？',chatSendBtn:'发送 →',
     howTitle:'Fineprint AI 如何工作',howSub:'选择工具，粘贴文件，用简单语言获得答案。',
@@ -1729,7 +1731,7 @@ const TRANSLATIONS={
     actionHintEmpty:'テキストを貼り付けるかPDFをアップロードして開始',actionHintReady:'準備完了——クリックして分析',
     analyzeBtn:'分析 →',loadingSub:'約15〜30秒かかります',
     keyFindings:'主な発見',bottomLineLabel:'結論',
-    copySummary:'📋 サマリーをコピー',analyzeAnother:'← 別の文書を分析',shareBtn:'共有 ↗',
+    copySummary:'📋 サマリーをコピー',downloadPdf:'⬇ PDFをダウンロード',analyzeAnother:'← 別の文書を分析',shareBtn:'共有 ↗',
     chatTitle:'フォローアップ質問をする',chatSub:'あなたの文書の完全なコンテキストを持っています——何でも聞いてください',
     chatPlaceholder:'例：いつでもキャンセルできますか？支払いを逃したらどうなりますか？',chatSendBtn:'送信 →',
     howTitle:'Fineprint AIの仕組み',howSub:'ツールを選び、文書を貼り付け、わかりやすい言葉で回答を得る。',
@@ -1794,7 +1796,7 @@ const TRANSLATIONS={
     actionHintEmpty:'텍스트를 붙여넣거나 PDF를 업로드하여 시작하세요',actionHintReady:'준비 완료——클릭하여 분석',
     analyzeBtn:'분석 →',loadingSub:'약 15~30초 정도 걸립니다',
     keyFindings:'주요 발견 사항',bottomLineLabel:'결론',
-    copySummary:'📋 요약 복사',analyzeAnother:'← 다른 문서 분석',shareBtn:'공유 ↗',
+    copySummary:'📋 요약 복사',downloadPdf:'⬇ PDF 다운로드',analyzeAnother:'← 다른 문서 분석',shareBtn:'공유 ↗',
     chatTitle:'추가 질문하기',chatSub:'문서의 전체 맥락을 파악하고 있습니다——무엇이든 물어보세요',
     chatPlaceholder:'예: 언제든지 취소할 수 있나요? 결제를 놓치면 어떻게 되나요?',chatSendBtn:'전송 →',
     howTitle:'Fineprint AI 작동 방식',howSub:'도구를 선택하고, 문서를 붙여넣고, 쉬운 언어로 답변을 받으세요.',
@@ -1859,7 +1861,7 @@ const TRANSLATIONS={
     actionHintEmpty:'الصق نصاً أو ارفع ملف PDF للبدء',actionHintReady:'جاهز — انقر للتحليل',
     analyzeBtn:'تحليل →',loadingSub:'يستغرق هذا حوالي 15–30 ثانية',
     keyFindings:'النتائج الرئيسية',bottomLineLabel:'الخلاصة',
-    copySummary:'📋 نسخ الملخص',analyzeAnother:'← تحليل مستند آخر',shareBtn:'مشاركة ↗',
+    copySummary:'📋 نسخ الملخص',downloadPdf:'⬇ تنزيل PDF',analyzeAnother:'← تحليل مستند آخر',shareBtn:'مشاركة ↗',
     chatTitle:'اطرح سؤالاً متابعاً',chatSub:'لدي السياق الكامل لمستندك — اسألني أي شيء',
     chatPlaceholder:'مثال: هل يمكنني الإلغاء في أي وقت؟ ماذا يحدث إذا فاتتني دفعة؟',chatSendBtn:'إرسال →',
     howTitle:'كيف يعمل Fineprint AI',howSub:'اختر أداة، الصق مستندك، احصل على إجابات بلغة واضحة.',
@@ -1924,7 +1926,7 @@ const TRANSLATIONS={
     actionHintEmpty:'शुरू करने के लिए टेक्स्ट पेस्ट करें या PDF अपलोड करें',actionHintReady:'तैयार — विश्लेषण के लिए क्लिक करें',
     analyzeBtn:'विश्लेषण करें →',loadingSub:'इसमें लगभग 15–30 सेकंड लगते हैं',
     keyFindings:'मुख्य निष्कर्ष',bottomLineLabel:'सारांश',
-    copySummary:'📋 सारांश कॉपी करें',analyzeAnother:'← दूसरा विश्लेषण करें',shareBtn:'शेयर करें ↗',
+    copySummary:'📋 सारांश कॉपी करें',downloadPdf:'⬇ PDF डाउनलोड करें',analyzeAnother:'← दूसरा विश्लेषण करें',shareBtn:'शेयर करें ↗',
     chatTitle:'अनुवर्ती प्रश्न पूछें',chatSub:'मेरे पास आपके दस्तावेज़ का पूरा संदर्भ है — कुछ भी पूछें',
     chatPlaceholder:'जैसे: क्या मैं कभी भी रद्द कर सकता हूं? अगर मैं भुगतान चूक जाऊं तो क्या होगा?',chatSendBtn:'भेजें →',
     howTitle:'Fineprint AI कैसे काम करता है',howSub:'एक टूल चुनें, अपना दस्तावेज़ पेस्ट करें, सरल भाषा में जवाब पाएं।',
@@ -1989,7 +1991,7 @@ const TRANSLATIONS={
     actionHintEmpty:'Вставьте текст или загрузите PDF для начала',actionHintReady:'Готово — нажмите для анализа',
     analyzeBtn:'Анализировать →',loadingSub:'Это занимает около 15–30 секунд',
     keyFindings:'Основные Выводы',bottomLineLabel:'Итог',
-    copySummary:'📋 Копировать Сводку',analyzeAnother:'← Анализировать Другой',shareBtn:'Поделиться ↗',
+    copySummary:'📋 Копировать Сводку',downloadPdf:'⬇ Скачать PDF',analyzeAnother:'← Анализировать Другой',shareBtn:'Поделиться ↗',
     chatTitle:'Задайте дополнительный вопрос',chatSub:'У меня есть полный контекст вашего документа — спрашивайте всё что угодно',
     chatPlaceholder:'напр. Могу ли я отменить в любое время? Что произойдёт, если я пропущу платёж?',chatSendBtn:'Отправить →',
     howTitle:'Как работает Fineprint AI',howSub:'Выберите инструмент, вставьте документ, получите ответы на понятном языке.',
@@ -3749,6 +3751,225 @@ function copyResults(){
     const btn=event.target;const orig=btn.textContent;
     btn.textContent='✅ Copied!';setTimeout(()=>btn.textContent=orig,2000);
   });
+}
+
+function downloadPdf(){
+  if(!lastResult)return;
+  const r=lastResult;
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'pt',format:'a4'});
+  const pw=doc.internal.pageSize.getWidth();
+  const ph=doc.internal.pageSize.getHeight();
+  const ml=50,mr=50,mt=54,cw=pw-ml-mr;
+  let y=mt;
+
+  function checkPage(needed){
+    if(y+needed>ph-50){doc.addPage();y=mt;}
+  }
+
+  function drawWrapped(text,x,startY,maxW,lineH,opts={}){
+    if(opts.fontSize)doc.setFontSize(opts.fontSize);
+    if(opts.font)doc.setFont('helvetica',opts.font);
+    if(opts.color)doc.setTextColor(...opts.color);
+    const lines=doc.splitTextToSize(String(text||''),maxW);
+    lines.forEach(line=>{
+      checkPage(lineH+4);
+      doc.text(line,x,y);
+      y+=lineH;
+    });
+    if(opts.after)y+=opts.after;
+  }
+
+  // Header bar
+  doc.setFillColor(26,24,20);
+  doc.rect(0,0,pw,38,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(13);
+  doc.setTextColor(247,245,240);
+  doc.text('Fineprint AI',ml,25);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.setTextColor(138,130,120);
+  doc.text('fineprint-ai.web.app',ml,36);
+  doc.setFontSize(8);
+  doc.text(new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}),pw-mr,36,{align:'right'});
+  y=60;
+
+  // Tool name
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.setTextColor(26,24,20);
+  doc.text(r.toolName||'Document Analysis',ml,y);
+  y+=28;
+
+  // Verdict pill
+  const vColors={safe:[45,125,70],caution:[176,125,10],danger:[212,56,13],info:[26,95,168]};
+  const vBg={safe:[237,247,240],caution:[253,246,227],danger:[255,241,238],info:[238,244,253]};
+  const vc=vColors[r.verdict]||[74,69,64];
+  const vb=vBg[r.verdict]||[238,234,225];
+  const pillW=cw;const pillH=64;
+  checkPage(pillH+12);
+  doc.setFillColor(...vb);
+  doc.roundedRect(ml,y,pillW,pillH,8,8,'F');
+  doc.setDrawColor(...vc);
+  doc.setLineWidth(1.2);
+  doc.roundedRect(ml,y,pillW,pillH,8,8,'S');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...vc);
+  doc.text((r.verdict||'').toUpperCase(),ml+14,y+18);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(13);
+  doc.setTextColor(26,24,20);
+  doc.text(r.verdict_title||'',ml+14,y+34);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(74,69,64);
+  const summaryLines=doc.splitTextToSize(r.verdict_summary||'',pillW-28);
+  summaryLines.forEach((ln,i)=>doc.text(ln,ml+14,y+34+14*(i+1)));
+  y+=pillH+16;
+
+  // Doc meta pills
+  const metaParts=[r.document_type,r.company_or_subject,r.word_count_estimate].filter(Boolean);
+  if(metaParts.length){
+    checkPage(22);
+    let mx=ml;
+    metaParts.forEach(p=>{
+      const tw=doc.getTextWidth(p)+16;
+      doc.setFillColor(238,234,225);
+      doc.roundedRect(mx,y-11,tw,16,4,4,'F');
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(8);
+      doc.setTextColor(74,69,64);
+      doc.text(p,mx+8,y);
+      mx+=tw+6;
+    });
+    y+=20;
+  }
+
+  // Key findings header
+  checkPage(30);
+  doc.setDrawColor(238,234,225);
+  doc.setLineWidth(1);
+  doc.line(ml,y,pw-mr,y);
+  y+=14;
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.setTextColor(26,24,20);
+  doc.text('Key Findings',ml,y);
+  const high=r.flags.filter(f=>f.risk==='high').length;
+  const med=r.flags.filter(f=>f.risk==='medium').length;
+  const low=r.flags.filter(f=>f.risk==='low').length;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.setTextColor(138,130,120);
+  doc.text(`${high} high · ${med} medium · ${low} low`,pw-mr,y,{align:'right'});
+  y+=18;
+
+  // Flags
+  const riskColor={high:[212,56,13],medium:[176,125,10],low:[45,125,70]};
+  const riskBg={high:[255,241,238],medium:[253,246,227],low:[237,247,240]};
+  r.flags.forEach((f,i)=>{
+    const expLines=doc.splitTextToSize(f.explanation||'',cw-22);
+    const tipLines=doc.splitTextToSize(f.tip||'',cw-22);
+    const quoteLines=f.quote?doc.splitTextToSize('"'+f.quote+'"',cw-22):[];
+    const blockH=14+expLines.length*11+(quoteLines.length?quoteLines.length*10+8:0)+tipLines.length*10+22;
+    checkPage(blockH+10);
+    const rc=riskColor[f.risk]||[74,69,64];
+    const rb=riskBg[f.risk]||[247,245,240];
+    doc.setFillColor(...rb);
+    doc.roundedRect(ml,y,cw,blockH,6,6,'F');
+    doc.setDrawColor(rc[0],rc[1],rc[2],0.3);
+    doc.setLineWidth(0.8);
+    doc.roundedRect(ml,y,cw,blockH,6,6,'S');
+    // Risk pill
+    const pillTxt=(f.risk||'').toUpperCase();
+    const ptw=doc.getTextWidth(pillTxt)+10;
+    doc.setFillColor(...rc);
+    doc.roundedRect(ml+10,y+8,ptw,13,3,3,'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(7);
+    doc.setTextColor(255,255,255);
+    doc.text(pillTxt,ml+10+ptw/2,y+17,{align:'center'});
+    // Flag name
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(10);
+    doc.setTextColor(26,24,20);
+    doc.text(f.name||'',ml+10+ptw+8,y+17);
+    let fy=y+28;
+    // Explanation
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(74,69,64);
+    expLines.forEach(ln=>{doc.text(ln,ml+10,fy);fy+=11;});
+    // Quote
+    if(quoteLines.length){
+      fy+=4;
+      doc.setFillColor(238,234,225);
+      doc.roundedRect(ml+10,fy-8,cw-20,quoteLines.length*10+6,3,3,'F');
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(8.5);
+      doc.setTextColor(74,69,64);
+      quoteLines.forEach(ln=>{doc.text(ln,ml+14,fy);fy+=10;});
+      fy+=4;
+    }
+    // Tip
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(138,130,120);
+    doc.text('Tip:',ml+10,fy);
+    doc.setTextColor(74,69,64);
+    const tipX=ml+10+doc.getTextWidth('Tip:')+4;
+    tipLines.forEach((ln,ti)=>{
+      doc.text(ln,ti===0?tipX:ml+10,fy);
+      fy+=10;
+    });
+    y+=blockH+8;
+  });
+
+  // Bottom line
+  checkPage(60);
+  doc.setDrawColor(238,234,225);
+  doc.setLineWidth(1);
+  doc.line(ml,y,pw-mr,y);
+  y+=14;
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.setTextColor(26,24,20);
+  doc.text('Bottom Line',ml,y);
+  y+=14;
+  drawWrapped(r.bottom_line,ml,y,cw,13,{fontSize:10,font:'normal',color:[26,24,20]});
+
+  // Appeal letter
+  if(r.appeal_letter){
+    checkPage(30);
+    doc.setDrawColor(238,234,225);
+    doc.line(ml,y,pw-mr,y);
+    y+=14;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11);
+    doc.setTextColor(26,24,20);
+    doc.text('Appeal Letter',ml,y);
+    y+=14;
+    drawWrapped(r.appeal_letter,ml,y,cw,13,{fontSize:9,font:'normal',color:[74,69,64]});
+  }
+
+  // Footer on each page
+  const totalPages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=totalPages;i++){
+    doc.setPage(i);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(138,130,120);
+    doc.text('Not legal or medical advice. Always consult a qualified professional for important decisions.',ml,ph-22);
+    doc.text(`Page ${i} of ${totalPages}`,pw-mr,ph-22,{align:'right'});
+  }
+
+  const filename=`fineprint-${(r.toolName||'analysis').toLowerCase().replace(/\s+/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`;
+  doc.save(filename);
+
+  const btn=event.target;const orig=btn.textContent;
+  btn.textContent='✅ Downloaded!';setTimeout(()=>btn.textContent=orig,2000);
 }
 
 function chatKeydown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}}
